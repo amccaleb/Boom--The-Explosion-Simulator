@@ -60,6 +60,8 @@ Game.prototype.init = function() {
 	var ambient_light = new THREE.AmbientLight(0x202020);
 	this.scene.add(ambient_light);
 
+	this.initGUI();
+
 	// Setup keyboard events
 	this.keys = {};
 	$('body').keydown(function(e) {
@@ -78,12 +80,11 @@ Game.prototype.init = function() {
 };
 
 /**
- * Initializes the simulation for the game 
+ * Initializes the simulation for the game
  */
-Game.prototype.initSim = function()
-{
+Game.prototype.initSim = function() {
 	var that = this;
-	
+
 	// Initialize the system dynamics model
 	this.sim = new SDModel("Explosion Simulation");
 
@@ -100,7 +101,7 @@ Game.prototype.initSim = function()
 	// This is to loosely mimic the quantum nature of the chemicals
 	// TODO: Actually balance this to something more consistent
 	_.each(sdfactorNames, function(element, index) {
-		that.sim.factors.push(new SDFactor(element, (Math.random() * 11)));
+		that.sim.factors.push(new SDFactor(element, (Math.random())));
 	});
 
 	// Attach all valves to levels.
@@ -122,7 +123,7 @@ Game.prototype.initSim = function()
 	// Visual Appeal
 	curLevel = this.sim.levels[sdlVisualAppeal];
 	curLevel.valves.push(this.sim.valves[sdvImpact], this.sim.valves[sdvColorVariety], this.sim.valves[sdvSize]);
-	
+
 	// Perf
 	curLevel = this.sim.levels[sdlPerf];
 	curLevel.valves.push(this.sim.valves[sdvHeat], this.sim.valves[sdvSize]);
@@ -130,66 +131,188 @@ Game.prototype.initSim = function()
 	// Strength
 	curLevel = this.sim.levels[sdlStrength];
 	curLevel.valves.push(this.sim.valves[sdvHeat], this.sim.valves[sdvPressure], this.sim.valves[sdvAcceleration]);
-	
+
 	// Velocity
 	curLevel = this.sim.levels[sdlVelocity];
 	curLevel.valves.push(this.sim.valves[sdvDischarge], this.sim.valves[sdvPressure], this.sim.valves[sdvAcceleration]);
-	
+
 	// Now attach all factors to valves with the desired polarity
 	// Impact
 	var curValve = this.sim.valves[sdvImpact];
 	curValve.attachFactor(this.sim.factors[sdfRoomTemp], -1);
 	curValve.attachFactor(this.sim.factors[sdfPouringForce], 1);
-	
+
 	// Friction
 	curValve = this.sim.valves[sdvFriction];
 	curValve.attachFactor(this.sim.factors[sdfFluidFric], 1);
 	curValve.attachFactor(this.sim.factors[sdfLubeFric], -1);
-	
+
 	// Heat
 	curValve = this.sim.valves[sdvHeat];
 	curValve.attachFactor(this.sim.factors[sdfRoomTemp], 1);
 	curValve.attachFactor(this.sim.factors[sdfNumChemicals], -1);
-	
+
 	// Chemical Composition
 	curValve = this.sim.valves[sdvChemCom];
 	curValve.attachFactor(this.sim.factors[sdfNumChemicals], 1);
 	curValve.attachFactor(this.sim.factors[sdfConvRate], -1);
-	
+
 	// Storage Temperature
 	curValve = this.sim.valves[sdvStorageTemp];
 	curValve.attachFactor(this.sim.factors[sdfRoomTemp], 1);
 	curValve.attachFactor(this.sim.factors[sdfStorageLoc], 1);
-	
+
 	// Exposure To Sunlight
 	curValve = this.sim.valves[sdvSunlight];
 	curValve.attachFactor(this.sim.factors[sdfWeather], 1);
 	curValve.attachFactor(this.sim.factors[sdfStorageLoc], -1);
-	
+
 	// Electric Discharge
 	curValve = this.sim.valves[sdvDischarge];
 	curValve.attachFactor(this.sim.factors[sdfWeather], 1);
 	curValve.attachFactor(this.sim.factors[sdfConvRate], -1);
-	
+
 	// Color Variety
 	curValve = this.sim.valves[sdvColorVariety];
 	curValve.attachFactor(this.sim.factors[sdfNumChemicals], 1);
-	
+
 	// Size
 	curValve = this.sim.valves[sdvSize];
 	curValve.attachFactor(this.sim.factors[sdfNumChemicals], 1);
 	curValve.attachFactor(this.sim.factors[sdfConvRate], -1);
 	curValve.attachFactor(this.sim.factors[sdfBeakerSize], 1);
-	
+
 	// Acceleration
 	curValve = this.sim.valves[sdvAcceleration];
 	curValve.attachFactor(this.sim.factors[sdfGravity], 1);
 	curValve.attachFactor(this.sim.factors[sdfPouringForce], -1);
-	
+
 	// Pressure
 	curValve = this.sim.valves[sdvPressure];
 	curValve.attachFactor(this.sim.factors[sdfPouringForce], 1);
 	curValve.attachFactor(this.sim.factors[sdfBeakerSize], -1);
+
+	// Lastly, attach all levels to factors to form a solid feedback loop
+	// Room Temperature
+	var curFactor = this.sim.factors[sdfRoomTemp];
+	curFactor.attachLevel(this.sim.levels[sdlSensitivity], (Math.random() * 0.25));
+	curFactor.attachLevel(this.sim.levels[sdlStability], (Math.random() * 0.25));
+
+	// Fluid Friction
+	curFactor = this.sim.factors[sdfFluidFric];
+	curFactor.attachLevel(this.sim.levels[sdlSensitivity], (Math.random() * 0.25));
+
+	// Lubrication Friction
+	curFactor = this.sim.factors[sdfLubeFric];
+	curFactor.attachLevel(this.sim.levels[sdlSensitivity], (Math.random() * 0.25));
+
+	// Storage Location
+	curFactor = this.sim.factors[sdfStorageLoc];
+	curFactor.attachLevel(this.sim.levels[sdlStability], (Math.random() * 0.25));
+
+	// Weather
+	curFactor = this.sim.factors[sdfWeather];
+	curFactor.attachLevel(this.sim.levels[sdlStability], (Math.random() * 0.25));
+
+	// Conversation Rate
+	curFactor = this.sim.factors[sdfConvRate];
+	curFactor.attachLevel(this.sim.levels[sdlStability], (Math.random() * 0.25));
+	curFactor.attachLevel(this.sim.levels[sdlVisualAppeal], (Math.random() * 0.25));
+	curFactor.attachLevel(this.sim.levels[sdlVelocity], (Math.random() * 0.25));
+
+	// Number of Chemicals
+	curFactor = this.sim.factors[sdfNumChemicals];
+	curFactor.attachLevel(this.sim.levels[sdlStability], (Math.random() * 0.25));
+	curFactor.attachLevel(this.sim.levels[sdlVisualAppeal], (Math.random() * 0.25));
+
+	// Gravity
+	curFactor = this.sim.factors[sdfGravity];
+	curFactor.attachLevel(this.sim.levels[sdlStrength], (Math.random() * 0.25));
+	curFactor.attachLevel(this.sim.levels[sdlVelocity], (Math.random() * 0.25));
+
+	// Pouring Force
+	curFactor = this.sim.factors[sdfPouringForce];
+	curFactor.attachLevel(this.sim.levels[sdlSensitivity], (Math.random() * 0.25));
+	curFactor.attachLevel(this.sim.levels[sdlStrength], (Math.random() * 0.25));
+	curFactor.attachLevel(this.sim.levels[sdlVelocity], (Math.random() * 0.25));
+
+	// Beaker Size
+	curFactor = this.sim.factors[sdfBeakerSize];
+	curFactor.attachLevel(this.sim.levels[sdlVisualAppeal], (Math.random() * 0.25));
+	curFactor.attachLevel(this.sim.levels[sdlVelocity], (Math.random() * 0.25));
+};
+
+/**
+ * Initializes the GUI for the game
+ * GUI code based on tutorials at: http://workshop.chromeexperiments.com/examples/gui/
+ */
+Game.prototype.initGUI = function() {
+	var that = this;
+
+	// Setup GUI
+	this.gui = new dat.GUI();
+
+	this.guiParameters = {
+		sensitivity : that.sim.levels[sdlSensitivity].value,
+		stability : that.sim.levels[sdlStability].value,
+		visualAppeal : that.sim.levels[sdlVisualAppeal].value,
+		perf : that.sim.levels[sdlPerf].value,
+		strength : that.sim.levels[sdlStrength].value,
+		velocity : that.sim.levels[sdlVelocity].value
+	};
+
+	var lSensitivity = this.gui.add(this.guiParameters, 'sensitivity').min(0).max(10).step(0.01).name('Sensitivity').listen();
+	lSensitivity.onChange(function(value) {
+		that.sim.levels[sdlSensitivity].value = value;
+	});
+
+	var lStability = this.gui.add(this.guiParameters, 'stability').min(0).max(10).step(0.01).name('Stability').listen();
+	lStability.onChange(function(value) {
+		that.sim.levels[sdlStability].value = value;
+	});
+
+	var lVisualAppeal = this.gui.add(this.guiParameters, 'visualAppeal').min(0).max(10).step(0.01).name('Visual Appeal').listen();
+	lVisualAppeal.onChange(function(value) {
+		that.sim.levels[sdlVisualAppeal].value = value;
+	});
+
+	var lPerf = this.gui.add(this.guiParameters, 'perf').min(0).max(10).step(0.01).name('Performance').listen();
+	lPerf.onChange(function(value) {
+		that.sim.levels[sdlPerf].value = value;
+	});
+
+	var lStrength = this.gui.add(this.guiParameters, 'strength').min(0).max(10).step(0.01).name('Strength').listen();
+	lStrength.onChange(function(value) {
+		that.sim.levels[sdlStrength].value = value;
+	});
+
+	var lVelocity = this.gui.add(this.guiParameters, 'velocity').min(0).max(10).step(0.01).name('Velocity').listen();
+	lVelocity.onChange(function(value) {
+		that.sim.levels[sdlVelocity].value = value;
+	});
+
+	this.gui.open();
+};
+
+/**
+ * Update the game state as well as the GUI's display
+ */
+Game.prototype.update = function() {
+	this.sim.update();
+
+	// Update the GUI with the new results from the simulation update
+	this.guiParameters.sensitivity = this.sim.levels[sdlSensitivity].value;
+	this.guiParameters.stability = this.sim.levels[sdlStability].value;
+	this.guiParameters.visualAppeal = this.sim.levels[sdlVisualAppeal].value;
+	this.guiParameters.perf = this.sim.levels[sdlPerf].value;
+	this.guiParameters.strength = this.sim.levels[sdlStrength].value;
+	this.guiParameters.velocity = this.sim.levels[sdlVelocity].value;
+
+	// Perform the manual update
+	// Iterate over all controllers
+	for (var i in this.gui.__controllers) {
+		this.gui.__controllers[i].updateDisplay();
+	}
 };
 
 /**
@@ -221,12 +344,19 @@ Game.prototype.handleInput = function() {
 Game.prototype.start = function() {
 	var that = this;
 	this.time0 = new Date().getTime();
+	this.lastUpdateTime = new Date().getTime();
 	// milliseconds since 1970
 	var loop = function() {
 		var time = new Date().getTime();
-		that.render((time - this.time0) * 0.001);
 		// Respond to user input
 		that.handleInput();
+		// Update the game state every second
+		if ((time - that.lastUpdateTime) > 1000) {
+			that.update();
+			that.lastUpdateTime = time;
+		}
+		// Render our scene
+		that.render((time - that.time0) * 0.001);
 		requestAnimationFrame(loop, that.renderer.domElement);
 	};
 	loop();

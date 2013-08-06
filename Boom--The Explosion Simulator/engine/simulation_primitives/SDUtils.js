@@ -34,7 +34,7 @@ var sdvSunlight = 5;
 var sdvDischarge = 6;
 var sdvColorVariety = 7;
 var sdvSize = 8;
-var sdvAccelaration = 9;
+var sdvAcceleration = 9;
 var sdvPressure = 10;
 
 // Factor enums

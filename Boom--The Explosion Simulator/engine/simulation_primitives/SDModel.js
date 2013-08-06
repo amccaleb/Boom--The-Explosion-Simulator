@@ -28,6 +28,11 @@ var SDModel = function(name) {
 SDModel.prototype.update = function() {
 	var that = this;
 
+	// Update all factors with the according level weights
+	_.each(this.factors, function(element, index) {
+		element.update();
+	});
+
 	// Update all valves with the according factor influences
 	_.each(this.valves, function(element, index) {
 		element.update();

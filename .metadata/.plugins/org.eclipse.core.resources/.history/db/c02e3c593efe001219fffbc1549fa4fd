@@ -1,0 +1,10 @@
+/**
+ * Alexander McCaleb
+ * CMPS 179 - Summer 2013
+ * Boom -- The Explosion Simulator
+ *
+ * SDEnums.js
+ *
+ * Holds enums corresponding to the all components in the system dynamics model created by this project.
+ * 
+ */

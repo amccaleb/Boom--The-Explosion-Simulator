@@ -63,7 +63,7 @@ SDValve.prototype.update = function()
 	
 	// Now sum the influence of all factors
 	_.each(this.factors, function(element, index) {
-		that.value += that.polarities[index] * element.influence;
+		that.value += that.polarities[index] * element.value;
 	});
 	
 	return this.value;

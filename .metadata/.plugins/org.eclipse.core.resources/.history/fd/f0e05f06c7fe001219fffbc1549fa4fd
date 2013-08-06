@@ -1,0 +1,43 @@
+/**
+ * Alexander McCaleb
+ * CMPS 179 - Summer 2013
+ * Boom -- The Explosion Simulator
+ *
+ * SDFactor.js
+ *
+ * Represents a Factor or Thing in a System Dynamics 
+ * model as described by Jay Forrester
+ * 
+ * Factors influence valves. 
+ * They can be thought of as a pipe flowing into a valve.
+ *
+ */
+
+/**
+ * Default Constructor
+ * Takes the name of the factor and it's influence on the valve it's connected to
+ * Creates a list of attached levels
+ */
+var SDFactor = function(name, influence)
+{
+	this.name = name;
+	this.influence = influence;
+	this.levels = [];
+};
+
+/**
+ * Attaches a level to this valve with the desired weight 
+ */
+SDValve.prototype.attachFactor = function(factor, weight)
+{
+	if(Math.abs(polarity) != 1)
+	{
+		console.error("SDValve.attacheFactor: You must pass a polarity of -1 or 1");
+		return null;
+	}
+	else
+	{
+		this.factors.push(factor);
+		this.polarities.push(polarity);
+	}
+};

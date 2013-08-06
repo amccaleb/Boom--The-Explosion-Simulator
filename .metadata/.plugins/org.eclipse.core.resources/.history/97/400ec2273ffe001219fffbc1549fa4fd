@@ -1,0 +1,33 @@
+/**
+ * Alexander McCaleb
+ * CMPS 179 - Summer 2013
+ * Boom -- The Explosion Simulator
+ *
+ * SDEnums.js
+ *
+ * Holds enums corresponding to the 
+ * all components in the system dynamics 
+ * model created by this project.
+ * 
+ */
+
+// Level enums
+var lSensitivity = 0;
+var lStability = 1;
+var lVisualAppeal = 2;
+var lPerf = 3;
+var lStrength = 4;
+var lVelocity = 5;
+
+// Valve enums
+var vImpact = 0;
+var vFriction = 1;
+var vHeat = 2;
+var vChemCom = 3;
+var vStorageTemp = 4;
+var vSunlight = 5;
+var vDischarge = 6;
+var vColorVariety = 7;
+var vSize = 8;
+var vAccelaration = 9;
+var vPressure = 10;

@@ -1,0 +1,55 @@
+<!--
+Alexander McCaleb
+CMPS 179 - Summer 2013
+Boom -- The Explosion Simulator
+
+index.html
+
+HTML5 handle for Boom scripts
+
+Starter Code provided by Nathan Whitehead from:
+http://nathansuniversity.com/CMPS179
+
+-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Boom -- The Explosion Simulator</title>
+  <script src="js/jquery-1.8.3.min.js"></script>
+  <script src="js/underscore-min.js"></script>
+  <script src="js/three.min.js"></script>
+  <script src="js/EffectComposer.js"></script>
+  <script src="js/RenderPass.js"></script>
+  <script src="js/ShaderPass.js"></script>
+  <script src="js/MaskPass.js"></script>
+  <script src="js/CopyShader.js"></script>
+
+</head>
+<body>
+
+<p>Boom -- The Explosion Simulator</p>
+
+  <!--Link all scripts in the project-->
+  <script src="engine/game_objects/Beat.js"></script>
+  <script src="engine/game_objects/Dancer.js"></script>
+  <script src="engine/game_objects/DiscoBall.js"></script>
+  <script src="engine/game_objects/GridCell.js"></script>
+  <script src="engine/game_objects/Grid.js"></script>
+  <script src="engine/game_objects/Skybox.js"></script>
+  <script src="engine/game_objects/Speaker.js"></script>
+  <script src="engine/game_objects/Wall.js"></script>
+  <script src="engine/simulation_primitives/SDEnums.js"></script>
+  <script src="engine/simulation_primitives/SDFactor.js"></script>
+  <script src="engine/simulation_primitives/SDLevel.js"></script>
+  <script src="engine/simulation_primitives/SDModel.js"></script>
+  <script src="engine/simulation_primitives/SDValve.js"></script>
+  <script src="util/Loader.js"></script>
+  <script src="Game.js"></script>
+  <script src="main.js"></script>
+
+</body>
+</html>
+
+
