@@ -1,7 +1,7 @@
 /**
  * Alexander McCaleb
  * CMPS 179 - Summer 2013
- * Prototype2 - Thumper
+ * Boom -- The Explosion Simulator
  *
  * Game.js
  *
@@ -39,8 +39,7 @@ Game.prototype.reset = function() {
 Game.prototype.init = function() {
 	var that = this;
 
-	// Create the beat that the game will be played at
-	this.beat = new Beat(100.0);
+	this.initSim();
 
 	// Initialize the camera
 	this.camera = new THREE.PerspectiveCamera(75, 4.0 / 3.0, 1, 10000);
@@ -48,76 +47,6 @@ Game.prototype.init = function() {
 	this.camera.position.z = 500;
 
 	this.scene = new THREE.Scene();
-
-	// Create the grid to represent the dance floor
-	this.grid = new Grid(8, this.beat);
-
-	_.each(this.grid.cells, function(element, index) {
-		that.scene.add(element.object);
-	});
-
-	// Make speakers surrounding the dance floor
-	this.speakers = [];
-	var positions = [{
-		x : 0,
-		y : 0
-	}, {
-		x : 7,
-		y : 0
-	}, {
-		x : 7,
-		y : 7
-	}, {
-		x : 0,
-		y : 7
-	}];
-	for (var posI = 0; posI < positions.length; posI++) {
-		var speaker = new Speaker(positions[posI], this.beat);
-		that.speakers.push(speaker);
-		that.scene.add(speaker.object);
-	}
-
-	// Create a dancer
-	var dancerPos = {
-		x : 3,
-		y : 0
-	};
-	this.dancer = new Dancer(dancerPos);
-
-	// Create a Disco Ball
-	this.discoBall = new DiscoBall({
-		x : 4,
-		y : 3
-	});
-	this.scene.add(this.discoBall.camera);
-	this.scene.add(this.discoBall.object);
-
-	// Create the surrounding walls
-	// TODO: Make this code look like not shit
-	this.walls = [];
-	var backWall = new Wall();
-	backWall.object.rotation.x = Math.PI * 0.5;
-	backWall.object.position.x = 50;
-	backWall.object.position.y = 350;
-	backWall.object.position.z = -100;
-	this.walls.push(backWall);
-	this.scene.add(backWall.object);
-	var leftWall = new Wall();
-	leftWall.object.rotation.x = Math.PI * 0.5;
-	leftWall.object.rotation.y = Math.PI * 0.5;
-	leftWall.object.position.x = -350;
-	leftWall.object.position.y = -50;
-	leftWall.object.position.z = -100;
-	this.walls.push(leftWall);
-	this.scene.add(leftWall.object);
-	var rightWall = new Wall();
-	rightWall.object.rotation.x = Math.PI * 0.5;
-	rightWall.object.rotation.y = -Math.PI * 0.5;
-	rightWall.object.position.x = 450;
-	rightWall.object.position.y = -50;
-	rightWall.object.position.z = -100;
-	this.walls.push(rightWall);
-	this.scene.add(rightWall.object);
 
 	// Create the Skybox
 	this.skybox = new Skybox();
@@ -130,31 +59,6 @@ Game.prototype.init = function() {
 	// Ambient light
 	var ambient_light = new THREE.AmbientLight(0x202020);
 	this.scene.add(ambient_light);
-
-	// Add post-process shaders for Gaussian Blur
-	this.composer = new THREE.EffectComposer(this.renderer);
-	this.composer.addPass(new THREE.RenderPass(this.scene, this.camera));
-
-	var ppVertexShaderText = loadFile('shaders/PPGaussBlurToBeat/PPGaussBlurToBeat.ppvert');
-	var ppFragmentShaderText = loadFile('shaders/PPGaussBlurToBeat/PPGaussBlurToBeat.ppfrag');
-
-	this.PPShader = {
-		uniforms : {
-			'tDiffuse' : {
-				type : 't',
-				value : null
-			},
-			'uBeat' : {
-				type : 'f',
-				value : 0.0
-			}
-		},
-		vertexShader : ppVertexShaderText,
-		fragmentShader : ppFragmentShaderText
-	};
-	this.effect = new THREE.ShaderPass(this.PPShader);
-	this.effect.renderToScreen = true;
-	this.composer.addPass(this.effect);
 
 	// Setup keyboard events
 	this.keys = {};
@@ -174,63 +78,140 @@ Game.prototype.init = function() {
 };
 
 /**
+ * Initializes the simulation for the game 
+ */
+Game.prototype.initSim = function()
+{
+	var that = this;
+	
+	// Initialize the system dynamics model
+	this.sim = new SDModel("Explosion Simulation");
+
+	// Create each component of the simulation
+	_.each(sdlevelNames, function(element, index) {
+		that.sim.levels.push(new SDLevel(element));
+	});
+
+	_.each(sdvalveNames, function(element, index) {
+		that.sim.valves.push(new SDValve(element));
+	});
+
+	// Each factor has a random influence.
+	// This is to loosely mimic the quantum nature of the chemicals
+	// TODO: Actually balance this to something more consistent
+	_.each(sdfactorNames, function(element, index) {
+		that.sim.factors.push(new SDFactor(element, (Math.random() * 11)));
+	});
+
+	// Attach all valves to levels.
+	// TODO: Make this more modular so everything can be addressed by string... not hard-coded enums
+	// Start with valves shared by all levels
+	_.each(this.sim.levels, function(element, index) {
+		element.valves.push(that.sim.valves[sdvChemCom]);
+	});
+
+	// Now do the individual cases
+	// Sensitivity
+	var curLevel = this.sim.levels[sdlSensitivity];
+	curLevel.valves.push(this.sim.valves[sdvImpact], this.sim.valves[sdvFriction], this.sim.valves[sdvHeat]);
+
+	// Stability
+	curLevel = this.sim.levels[sdlStability];
+	curLevel.valves.push(this.sim.valves[sdvStorageTemp], this.sim.valves[sdvSunlight], this.sim.valves[sdvDischarge]);
+
+	// Visual Appeal
+	curLevel = this.sim.levels[sdlVisualAppeal];
+	curLevel.valves.push(this.sim.valves[sdvImpact], this.sim.valves[sdvColorVariety], this.sim.valves[sdvSize]);
+	
+	// Perf
+	curLevel = this.sim.levels[sdlPerf];
+	curLevel.valves.push(this.sim.valves[sdvHeat], this.sim.valves[sdvSize]);
+
+	// Strength
+	curLevel = this.sim.levels[sdlStrength];
+	curLevel.valves.push(this.sim.valves[sdvHeat], this.sim.valves[sdvPressure], this.sim.valves[sdvAcceleration]);
+	
+	// Velocity
+	curLevel = this.sim.levels[sdlVelocity];
+	curLevel.valves.push(this.sim.valves[sdvDischarge], this.sim.valves[sdvPressure], this.sim.valves[sdvAcceleration]);
+	
+	// Now attach all factors to valves with the desired polarity
+	// Impact
+	var curValve = this.sim.valves[sdvImpact];
+	curValve.attachFactor(this.sim.factors[sdfRoomTemp], -1);
+	curValve.attachFactor(this.sim.factors[sdfPouringForce], 1);
+	
+	// Friction
+	curValve = this.sim.valves[sdvFriction];
+	curValve.attachFactor(this.sim.factors[sdfFluidFric], 1);
+	curValve.attachFactor(this.sim.factors[sdfLubeFric], -1);
+	
+	// Heat
+	curValve = this.sim.valves[sdvHeat];
+	curValve.attachFactor(this.sim.factors[sdfRoomTemp], 1);
+	curValve.attachFactor(this.sim.factors[sdfNumChemicals], -1);
+	
+	// Chemical Composition
+	curValve = this.sim.valves[sdvChemCom];
+	curValve.attachFactor(this.sim.factors[sdfNumChemicals], 1);
+	curValve.attachFactor(this.sim.factors[sdfConvRate], -1);
+	
+	// Storage Temperature
+	curValve = this.sim.valves[sdvStorageTemp];
+	curValve.attachFactor(this.sim.factors[sdfRoomTemp], 1);
+	curValve.attachFactor(this.sim.factors[sdfStorageLoc], 1);
+	
+	// Exposure To Sunlight
+	curValve = this.sim.valves[sdvSunlight];
+	curValve.attachFactor(this.sim.factors[sdfWeather], 1);
+	curValve.attachFactor(this.sim.factors[sdfStorageLoc], -1);
+	
+	// Electric Discharge
+	curValve = this.sim.valves[sdvDischarge];
+	curValve.attachFactor(this.sim.factors[sdfWeather], 1);
+	curValve.attachFactor(this.sim.factors[sdfConvRate], -1);
+	
+	// Color Variety
+	curValve = this.sim.valves[sdvColorVariety];
+	curValve.attachFactor(this.sim.factors[sdfNumChemicals], 1);
+	
+	// Size
+	curValve = this.sim.valves[sdvSize];
+	curValve.attachFactor(this.sim.factors[sdfNumChemicals], 1);
+	curValve.attachFactor(this.sim.factors[sdfConvRate], -1);
+	curValve.attachFactor(this.sim.factors[sdfBeakerSize], 1);
+	
+	// Acceleration
+	curValve = this.sim.valves[sdvAcceleration];
+	curValve.attachFactor(this.sim.factors[sdfGravity], 1);
+	curValve.attachFactor(this.sim.factors[sdfPouringForce], -1);
+	
+	// Pressure
+	curValve = this.sim.valves[sdvPressure];
+	curValve.attachFactor(this.sim.factors[sdfPouringForce], 1);
+	curValve.attachFactor(this.sim.factors[sdfBeakerSize], -1);
+};
+
+/**
  * Render game view for time t
  */
 Game.prototype.render = function(t) {
 
 	var that = this;
 
-	// Save the elapsed time
-	this.elapsedTime = t;
-
-	// Add our dancer to the scene if possible
-	if (this.dancer.isLoaded) {
-		if (this.dancer.isLive) {
-			this.dancer.animate();
-		} else// Make it live
-		{
-			this.scene.add(this.dancer.object);
-			this.dancer.isLive = true;
-		}
-	}
-
-	// Render our dance floor
-	this.grid.render(t);
-
-	// Render all our speakers
-	_.each(this.speakers, function(element, index) {
-		element.render(t);
-	});
-
-	// Render our walls
-	_.each(this.walls, function(element, index) {
-		element.render(t);
-	});
-
-	// Pass updated uniform variables to post process shaders
-	this.PPShader.uniforms['uBeat'].value = this.beat.toBeat(t);
-	this.effect.renderToScreen = false;
-	this.effect = new THREE.ShaderPass(this.PPShader);
-	this.effect.renderToScreen = true;
-	this.composer.insertPass(this.effect, 1);
-
 	// Look at the scene and render
 	this.camera.lookAt(this.scene.position);
-	//this.renderer.render(this.scene, this.camera);
-	this.composer.render();
+	this.renderer.render(this.scene, this.camera);
 };
 
 /**
- * Allows the game to respond to user input 
+ * Allows the game to respond to user input
  */
 Game.prototype.handleInput = function() {
 	// Spacebar
 	if (this.keys[32] === true) {
 		this.keys[32] = 'triggered';
-		
-		// Detect whether input is on beat or not
-		var time = new Date().getTime();
-		//this.beat.onBeat(this.elapsedTime, (time - this.time0) * 0.001);
+
 	}
 };
 

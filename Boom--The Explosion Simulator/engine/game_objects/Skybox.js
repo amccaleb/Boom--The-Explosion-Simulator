@@ -1,11 +1,11 @@
 /**
  * Alexander McCaleb
  * CMPS 179 - Summer 2013
- * Prototype2 - Thumper
+ * Boom -- The Explosion Simulator
  *
  * Skybox.js
  *
- * Represents a skybox for Thumper
+ * Represents a skybox for Boom
  *
  * Based on code from Shift Escape
  *

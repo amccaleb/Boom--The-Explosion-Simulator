@@ -1,0 +1,26 @@
+!SESSION 2013-08-01 16:37:49.734 -----------------------------------------------
+eclipse.buildId=3.4.1.201306062137
+java.version=1.6.0_24
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86
+
+!ENTRY com.aptana.editor.common 4 0 2013-08-01 16:55:55.665
+!MESSAGE (Build 3.4.1.201306062137) [ERROR]  (Errno::EINVAL) =::
+!STACK 0
+org.jruby.exceptions.RaiseException: (Errno::EINVAL) =::
+	at org.jruby.RubyHash.replace(org/jruby/RubyHash.java:1623)
+
+!ENTRY com.aptana.git.core 4 1 2013-08-02 10:48:36.635
+!MESSAGE Errors occurred while refreshing git index
+!SUBENTRY 1 com.aptana.git.core 4 0 2013-08-02 10:48:36.636
+!MESSAGE Unable to run update-index: 
+!SESSION 2013-08-04 16:36:44.513 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.6.0_24
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86
+
+!ENTRY org.eclipse.core.resources 2 10035 2013-08-04 16:37:36.453
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.

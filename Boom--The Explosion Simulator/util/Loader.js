@@ -1,7 +1,7 @@
 /**
  * Alexander McCaleb
  * CMPS 179 - Summer 2013
- * Prototype2 - Thumper
+ * Boom -- The Explosion Simulator
  * 
  * Loader.js
  * 

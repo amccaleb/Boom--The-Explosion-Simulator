@@ -1,0 +1,14 @@
+/**
+ * Alexander McCaleb
+ * CMPS 179 - Summer 2013
+ * Boom -- The Explosion Simulator
+ *
+ * SDValve.js
+ *
+ * Represents a Valve/Rate or Flow in a System Dynamics 
+ * model as described by Jay Forrester
+ *
+ * Valves are tuned by factors 
+ * They can be thought of as the derivative of a level.
+ * 
+ */

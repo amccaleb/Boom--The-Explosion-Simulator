@@ -1,11 +1,11 @@
 /**
  * Alexander McCaleb
  * CMPS 179 - Summer 2013
- * Prototype2 - Thumper
+ * Boom -- The Explosion Simulator
  * 
  * main.js
  * 
- * Main entry point for Thumper
+ * Main entry point for Boom
  * 
  * Based on code provided by Nathan Whitehead at:
  * http://nathansuniversity.com/cmps179/presentations/demo/tex9.html
