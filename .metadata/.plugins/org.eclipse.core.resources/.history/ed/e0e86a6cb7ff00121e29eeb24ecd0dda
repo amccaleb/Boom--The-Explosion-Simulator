@@ -17,10 +17,6 @@
  * Constructs a new game
  */
 var Game = function() {
-	
-	// Create the clock the game will run on
-	this.clock = new THREE.Clock();
-	
 	// Set up the renderer as we should only do this on creation
 	this.renderer = new THREE.WebGLRenderer({
 		antialias : true
@@ -272,7 +268,7 @@ Game.prototype.initChemicals = function() {
 	// Bathtubic
 	var bathtubic = new CHBathtubic();
 	bathtubic.object.position.set(0, -140, 0);
-	this.chemicals.push(bathtubic);
+	this.chemicals.push(bathtubic.object);
 	
 	// Add each chemical to our scene
 	_.each(this.chemicals, function(element, index) {
@@ -355,16 +351,10 @@ Game.prototype.update = function() {
 
 /**
  * Render game view for time t
- * Anything that isn't explicitly rendered ere, is implicitly rendered by THREE.js
  */
 Game.prototype.render = function(t) {
 
 	var that = this;
-
-	// Render all our chemicals
-	_.each(this.chemicals, function(element, index) {
-		element.render(t);
-	});
 
 	// Look at the scene and render
 	this.camera.lookAt(this.scene.position);
@@ -390,6 +380,7 @@ Game.prototype.handleInput = function() {
  */
 Game.prototype.start = function() {
 	var that = this;
+	this.time0 = new Date().getTime();
 	this.lastUpdateTime = new Date().getTime();
 	// milliseconds since 1970
 	var loop = function() {
@@ -402,7 +393,7 @@ Game.prototype.start = function() {
 			that.lastUpdateTime = time;
 		}
 		// Render our scene
-		that.render(that.clock.getDelta());
+		that.render((time - that.time0) * 0.001);
 		requestAnimationFrame(loop, that.renderer.domElement);
 	};
 	loop();

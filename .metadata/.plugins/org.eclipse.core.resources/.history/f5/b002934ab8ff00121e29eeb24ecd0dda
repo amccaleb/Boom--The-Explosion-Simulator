@@ -272,7 +272,7 @@ Game.prototype.initChemicals = function() {
 	// Bathtubic
 	var bathtubic = new CHBathtubic();
 	bathtubic.object.position.set(0, -140, 0);
-	this.chemicals.push(bathtubic);
+	this.chemicals.push(bathtubic.object);
 	
 	// Add each chemical to our scene
 	_.each(this.chemicals, function(element, index) {
@@ -355,16 +355,10 @@ Game.prototype.update = function() {
 
 /**
  * Render game view for time t
- * Anything that isn't explicitly rendered ere, is implicitly rendered by THREE.js
  */
 Game.prototype.render = function(t) {
 
 	var that = this;
-
-	// Render all our chemicals
-	_.each(this.chemicals, function(element, index) {
-		element.render(t);
-	});
 
 	// Look at the scene and render
 	this.camera.lookAt(this.scene.position);
@@ -390,6 +384,7 @@ Game.prototype.handleInput = function() {
  */
 Game.prototype.start = function() {
 	var that = this;
+	this.time0 = new Date().getTime();
 	this.lastUpdateTime = new Date().getTime();
 	// milliseconds since 1970
 	var loop = function() {

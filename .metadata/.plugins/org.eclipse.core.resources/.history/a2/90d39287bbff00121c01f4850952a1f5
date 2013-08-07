@@ -272,7 +272,7 @@ Game.prototype.initChemicals = function() {
 	// Bathtubic
 	var bathtubic = new CHBathtubic();
 	bathtubic.object.position.set(0, -140, 0);
-	this.chemicals.push(bathtubic);
+	this.chemicals.push(bathtubic.object);
 	
 	// Add each chemical to our scene
 	_.each(this.chemicals, function(element, index) {

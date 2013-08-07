@@ -17,6 +17,8 @@
 <coolItem id="group.nav" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.ui.workbench.navigate" itemType="typeToolBarContribution" x="91" y="22"/>
 <coolItem id="group.editor" itemType="typeGroupMarker"/>
+<coolItem id="com.aptana.editor.html" itemType="typeToolBarContribution" x="-1" y="-1"/>
+<coolItem id="com.aptana.editor.js" itemType="typeToolBarContribution" x="-1" y="-1"/>
 <coolItem id="group.help" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.ui.workbench.help" itemType="typeToolBarContribution" x="-1" y="-1"/>
 </coolbarLayout>
@@ -27,10 +29,34 @@
 <folder appearance="1" expanded="2">
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
 <part id="0"/>
+<part id="1"/>
+<part id="2"/>
+<part id="3"/>
+<part id="4"/>
 </presentation>
 </folder>
 </info>
 </editorArea>
+<editor id="com.aptana.editor.js" name="Game.js" partName="Game.js | stuffToMerge" path="C:/Users/Ajay/My Programs/CMPS 179/Summer 2013/Boom--The-Explosion-Simulator/Boom--The Explosion Simulator/stuffToMerge/Game.js" title="Game.js | stuffToMerge" tooltip="Boom--The Explosion Simulator/stuffToMerge/Game.js" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Boom--The Explosion Simulator/stuffToMerge/Game.js"/>
+<editorState selectionHorizontalPixel="0" selectionLength="69" selectionOffset="5581" selectionTopPixel="2405"/>
+</editor>
+<editor activePart="true" focus="true" id="com.aptana.editor.js" name="Game.js" partName="Game.js | Boom--The Explosion Simulator" path="C:/Users/Ajay/My Programs/CMPS 179/Summer 2013/Boom--The-Explosion-Simulator/Boom--The Explosion Simulator/Game.js" title="Game.js | Boom--The Explosion Simulator" tooltip="Boom--The Explosion Simulator/Game.js" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Boom--The Explosion Simulator/Game.js"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="12172" selectionTopPixel="5316"/>
+</editor>
+<editor id="com.aptana.editor.html" name="index.html" partName="index.html" path="C:/Users/Ajay/My Programs/CMPS 179/Summer 2013/Boom--The-Explosion-Simulator/Boom--The Explosion Simulator/index.html" title="index.html" tooltip="Boom--The Explosion Simulator/index.html" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Boom--The Explosion Simulator/index.html"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1828" selectionTopPixel="446"/>
+</editor>
+<editor id="com.aptana.editor.js" name="CHBathtubic.js" partName="CHBathtubic.js" path="C:/Users/Ajay/My Programs/CMPS 179/Summer 2013/Boom--The-Explosion-Simulator/Boom--The Explosion Simulator/engine/game_objects/chemicals/CHBathtubic.js" title="CHBathtubic.js" tooltip="Boom--The Explosion Simulator/engine/game_objects/chemicals/CHBathtubic.js" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Boom--The Explosion Simulator/engine/game_objects/chemicals/CHBathtubic.js"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1931" selectionTopPixel="785"/>
+</editor>
+<editor id="com.aptana.editor.js" name="Speaker.js" partName="Speaker.js" path="C:/Users/Ajay/My Programs/CMPS 179/Summer 2013/Boom--The-Explosion-Simulator/Boom--The Explosion Simulator/engine/game_objects/Speaker.js" title="Speaker.js" tooltip="Boom--The Explosion Simulator/engine/game_objects/Speaker.js" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Boom--The Explosion Simulator/engine/game_objects/Speaker.js"/>
+<editorState selectionHorizontalPixel="0" selectionLength="427" selectionOffset="1356" selectionTopPixel="620"/>
+</editor>
 </editors>
 <views>
 <view id="org.eclipse.ui.navigator.ProjectExplorer" partName="Project Explorer">
@@ -41,6 +67,9 @@
 <view id="com.aptana.samples.ui.SamplesView" partName="Samples"/>
 <view id="org.eclipse.ui.views.ProblemView" partName="Problems">
 <viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.severityAndDescriptionField" categoryGroup="org.eclipse.ui.ide.severity" markerContentGenerator="org.eclipse.ui.ide.problemsGenerator" partName="Problems">
+<expanded>
+<category IMemento.internal.id="Errors (37 items)"/>
+</expanded>
 <columnWidths org.eclipse.ui.ide.locationField="90" org.eclipse.ui.ide.markerType="90" org.eclipse.ui.ide.pathField="120" org.eclipse.ui.ide.resourceField="90" org.eclipse.ui.ide.severityAndDescriptionField="300"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.severityAndDescriptionField"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.resourceField"/>
@@ -53,13 +82,19 @@
 <viewState/>
 </view>
 <view id="com.aptana.explorer.view" partName="App Explorer">
-<viewState CommonNavigator.LINKING_ENABLED="0" GitChangedFilesFilterEnabled=""/>
+<viewState CommonNavigator.LINKING_ENABLED="0" GitChangedFilesFilterEnabled="" activeProject="Boom--The Explosion Simulator">
+<project name="Boom--The Explosion Simulator">
+<selection>
+<element path="/Boom--The Explosion Simulator"/>
+</selection>
+</project>
+</viewState>
 </view>
 <view id="org.eclipse.ui.views.ContentOutline" partName="Outline">
 <viewState/>
 </view>
 </views>
-<perspectives activePart="com.aptana.portal.ui.browser.startPage" activePerspective="com.aptana.ui.WebPerspective">
+<perspectives activePart="org.eclipse.ui.navigator.ProjectExplorer" activePerspective="com.aptana.ui.WebPerspective">
 <perspective editorAreaTrimState="2" editorAreaVisible="1" fixed="0" version="0.016">
 <descriptor class="com.aptana.ui.internal.WebPerspectiveFactory" id="com.aptana.ui.WebPerspective" label="Web"/>
 <alwaysOnActionSet id="com.aptana.browser.actionSet"/>
@@ -160,7 +195,154 @@
 </perspective>
 </perspectives>
 <workingSets/>
-<navigationHistory/>
+<navigationHistory>
+<editors>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.aptana.editor.js" path="/Boom--The Explosion Simulator/stuffToMerge/Game.js"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.aptana.editor.js" path="/Boom--The Explosion Simulator/Game.js"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.aptana.editor.html" path="/Boom--The Explosion Simulator/index.html"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.aptana.editor.js" path="/Boom--The Explosion Simulator/engine/game_objects/chemicals/Bathtubic.js"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.aptana.editor.js" path="/Boom--The Explosion Simulator/engine/game_objects/chemicals/CHBathtubic.js"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.aptana.editor.js" path="/Boom--The Explosion Simulator/engine/game_objects/Speaker.js"/>
+</editors>
+<item historyLabel="Game.js | stuffToMerge" index="0">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="Game.js | Boom--The Explosion Simulator" index="1">
+<position info="not_deleted" x="13135" y="0"/>
+</item>
+<item historyLabel="index.html" index="2">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="Bathtubic.js" index="3">
+<position/>
+</item>
+<item historyLabel="Game.js | Boom--The Explosion Simulator" index="1">
+<position info="not_deleted" x="13135" y="0"/>
+</item>
+<item historyLabel="Game.js | stuffToMerge" index="0">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="Bathtubic.js" index="3">
+<position info="not_deleted" x="1630" y="0"/>
+</item>
+<item historyLabel="Game.js | Boom--The Explosion Simulator" index="1">
+<position info="not_deleted" x="13135" y="0"/>
+</item>
+<item historyLabel="Game.js | Boom--The Explosion Simulator" index="1">
+<position/>
+</item>
+<item historyLabel="Game.js | Boom--The Explosion Simulator" index="1">
+<position/>
+</item>
+<item historyLabel="CHBathtubic.js" index="4">
+<position info="not_deleted" x="1681" y="0"/>
+</item>
+<item historyLabel="Game.js | Boom--The Explosion Simulator" index="1">
+<position info="not_deleted" x="9209" y="0"/>
+</item>
+<item historyLabel="Game.js | Boom--The Explosion Simulator" index="1">
+<position info="not_deleted" x="8934" y="0"/>
+</item>
+<item historyLabel="Game.js | Boom--The Explosion Simulator" index="1">
+<position info="not_deleted" x="8989" y="0"/>
+</item>
+<item historyLabel="Game.js | Boom--The Explosion Simulator" index="1">
+<position info="not_deleted" x="9207" y="0"/>
+</item>
+<item historyLabel="Game.js | Boom--The Explosion Simulator" index="1">
+<position info="not_deleted" x="9203" y="0"/>
+</item>
+<item historyLabel="index.html" index="2">
+<position info="not_deleted" x="1828" y="0"/>
+</item>
+<item historyLabel="CHBathtubic.js" index="4">
+<position info="not_deleted" x="1570" y="0"/>
+</item>
+<item historyLabel="index.html" index="2">
+<position info="not_deleted" x="1828" y="0"/>
+</item>
+<item historyLabel="Game.js | Boom--The Explosion Simulator" index="1">
+<position info="not_deleted" x="9011" y="0"/>
+</item>
+<item historyLabel="CHBathtubic.js" index="4">
+<position info="not_deleted" x="1570" y="0"/>
+</item>
+<item historyLabel="index.html" index="2">
+<position info="not_deleted" x="1828" y="0"/>
+</item>
+<item historyLabel="CHBathtubic.js" index="4">
+<position info="not_deleted" x="1570" y="0"/>
+</item>
+<item historyLabel="Game.js | Boom--The Explosion Simulator" index="1">
+<position info="not_deleted" x="9011" y="0"/>
+</item>
+<item historyLabel="index.html" index="2">
+<position info="not_deleted" x="1828" y="0"/>
+</item>
+<item historyLabel="CHBathtubic.js" index="4">
+<position info="not_deleted" x="1570" y="0"/>
+</item>
+<item historyLabel="Speaker.js" index="5">
+<position info="not_deleted" x="1356" y="427"/>
+</item>
+<item historyLabel="CHBathtubic.js" index="4">
+<position info="not_deleted" x="1772" y="0"/>
+</item>
+<item historyLabel="Game.js | stuffToMerge" index="0">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="Game.js | Boom--The Explosion Simulator" index="1">
+<position info="not_deleted" x="9011" y="0"/>
+</item>
+<item historyLabel="Game.js | Boom--The Explosion Simulator" index="1">
+<position info="not_deleted" x="471" y="0"/>
+</item>
+<item historyLabel="Game.js | stuffToMerge" index="0">
+<position info="not_deleted" x="5581" y="69"/>
+</item>
+<item historyLabel="Game.js | Boom--The Explosion Simulator" index="1">
+<position info="not_deleted" x="471" y="0"/>
+</item>
+<item historyLabel="Game.js | Boom--The Explosion Simulator" index="1">
+<position info="not_deleted" x="13054" y="0"/>
+</item>
+<item historyLabel="Game.js | stuffToMerge" index="0">
+<position info="not_deleted" x="5581" y="69"/>
+</item>
+<item historyLabel="Game.js | Boom--The Explosion Simulator" index="1">
+<position info="not_deleted" x="12663" y="0"/>
+</item>
+<item historyLabel="CHBathtubic.js" index="4">
+<position info="not_deleted" x="1931" y="0"/>
+</item>
+<item historyLabel="Game.js | Boom--The Explosion Simulator" index="1">
+<position info="not_deleted" x="12663" y="0"/>
+</item>
+<item historyLabel="Game.js | Boom--The Explosion Simulator" index="1">
+<position info="not_deleted" x="12174" y="0"/>
+</item>
+<item historyLabel="index.html" index="2">
+<position info="not_deleted" x="1828" y="0"/>
+</item>
+<item historyLabel="CHBathtubic.js" index="4">
+<position info="not_deleted" x="1931" y="0"/>
+</item>
+<item historyLabel="index.html" index="2">
+<position info="not_deleted" x="1828" y="0"/>
+</item>
+<item historyLabel="Game.js | Boom--The Explosion Simulator" index="1">
+<position info="not_deleted" x="12172" y="0"/>
+</item>
+<item historyLabel="index.html" index="2">
+<position info="not_deleted" x="1828" y="0"/>
+</item>
+<item historyLabel="CHBathtubic.js" index="4">
+<position info="not_deleted" x="1931" y="0"/>
+</item>
+<item active="true" historyLabel="Game.js | Boom--The Explosion Simulator" index="1">
+<position info="not_deleted" x="12172" y="0"/>
+</item>
+</navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
 </page>
 <workbenchWindowAdvisor/>
@@ -176,5 +358,21 @@
 </trimArea>
 </trimLayout>
 </window>
-<mruList/>
+<mruList>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.aptana.editor.js" name="Speaker.js" tooltip="Boom--The Explosion Simulator/engine/game_objects/Speaker.js">
+<persistable path="/Boom--The Explosion Simulator/engine/game_objects/Speaker.js"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.aptana.editor.js" name="Bathtubic.js" tooltip="Boom--The Explosion Simulator/engine/game_objects/chemicals/Bathtubic.js">
+<persistable path="/Boom--The Explosion Simulator/engine/game_objects/chemicals/Bathtubic.js"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.aptana.editor.html" name="index.html" tooltip="Boom--The Explosion Simulator/index.html">
+<persistable path="/Boom--The Explosion Simulator/index.html"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.aptana.editor.js" name="Game.js" tooltip="Boom--The Explosion Simulator/Game.js">
+<persistable path="/Boom--The Explosion Simulator/Game.js"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.aptana.editor.js" name="Game.js" tooltip="Boom--The Explosion Simulator/stuffToMerge/Game.js">
+<persistable path="/Boom--The Explosion Simulator/stuffToMerge/Game.js"/>
+</file>
+</mruList>
 </workbench>
