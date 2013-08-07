@@ -1,0 +1,14 @@
+/**
+ * Alexander McCaleb & Jonah Nobleza
+ * CMPS 179 - Summer 2013
+ * Boom -- The Explosion Simulator
+ *
+ * Game.js
+ *
+ * Game object
+ * The highest level object representing entire game
+ *
+ * Based on code provided by Nathan Whitehead at:
+ * http://nathansuniversity.com/cmps179/presentations/demo/tex9.html
+ *
+ */

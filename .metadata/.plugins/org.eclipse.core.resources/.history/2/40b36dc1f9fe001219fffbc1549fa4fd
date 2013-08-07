@@ -1,0 +1,18 @@
+/**
+ * Alexander McCaleb & Jonah Nobleza
+ * CMPS 179 - Summer 2013
+ * Boom -- The Explosion Simulator
+ *
+ * Ceilingdroptum.js
+ *
+ * The fake chemical: Ceilingdroptum, in Boom!
+ * 
+ * Ceilingdroptum has the following properties:
+ * Sensitivity: 	4
+ * Stability: 		8
+ * Visual Appeal: 	6
+ * Performance:		9
+ * Strength:		7
+ * Velocity:		4
+ *
+ */

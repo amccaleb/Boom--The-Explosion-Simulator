@@ -1,5 +1,5 @@
 /**
- * Alexander McCaleb
+ * Alexander McCaleb & Jonah Nobleza
  * CMPS 179 - Summer 2013
  * Boom -- The Explosion Simulator
  *
@@ -22,7 +22,9 @@ var Game = function() {
 		antialias : true
 	});
 	this.renderer.setSize(800, 600);
+	this.renderer.shadowMapEnabled = true;
 	this.renderer.setClearColor(0xeeeeee, 1.0);
+	this.renderer.shadowMapSoft = true;
 	document.body.appendChild(this.renderer.domElement);
 };
 
@@ -43,10 +45,20 @@ Game.prototype.init = function() {
 
 	// Initialize the camera
 	this.camera = new THREE.PerspectiveCamera(75, 4.0 / 3.0, 1, 10000);
-	this.camera.position.y = -500;
-	this.camera.position.z = 500;
+	this.camera.position.z = -500;
+	this.camera.position.x = 0;
+	this.camera.position.y = 200;
+
+	// Ability to rotate/look around with mouse.
+	this.orbitControls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
 
 	this.scene = new THREE.Scene();
+
+	// Create the table for chemicals to sit on
+	this.table = new Table();
+	this.table.object.rotation.x = 300;
+	this.table.object.translateZ(-190);
+	this.scene.add(this.table.object);
 
 	// Create the Skybox
 	this.skybox = new Skybox();
@@ -331,6 +343,9 @@ Game.prototype.render = function(t) {
  * Allows the game to respond to user input
  */
 Game.prototype.handleInput = function() {
+	// First update the orbit controls
+	this.orbitControls.update();
+	
 	// Spacebar
 	if (this.keys[32] === true) {
 		this.keys[32] = 'triggered';

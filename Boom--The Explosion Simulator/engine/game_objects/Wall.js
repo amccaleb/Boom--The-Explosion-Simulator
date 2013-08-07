@@ -5,7 +5,7 @@
  *
  * Wall.js
  *
- * Represents a wall for Thumper
+ * Represents a wall for Boom!
  *
  */
 

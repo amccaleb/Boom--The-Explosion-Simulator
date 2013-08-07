@@ -1,0 +1,29 @@
+/**
+ * Alexander McCaleb & Jonah Nobleza
+ * CMPS 179 - Summer 2013
+ * Boom -- The Explosion Simulator
+ *
+ * Table.js
+ *
+ * Represents a table for chemicals to sit on for Boom!
+ *
+ */
+
+/**
+ * Default Constructor
+ * Constructs the plane for teh table and puts a wood texture on it
+ */
+var Table = function()
+{
+	
+};
+var planeGeometry = new THREE.PlaneGeometry(1500, 1000, 100, 100);
+var planeMaterial = new THREE.MeshBasicMaterial({
+	map : THREE.ImageUtils.loadTexture('wood.jpg')
+});
+var plane = new THREE.Mesh(planeGeometry, planeMaterial);
+//plane.receiveShadow = true;
+//plane.castShadow = true;
+scene.add(plane);
+plane.rotation.x = 300;
+plane.translateZ(-190); 

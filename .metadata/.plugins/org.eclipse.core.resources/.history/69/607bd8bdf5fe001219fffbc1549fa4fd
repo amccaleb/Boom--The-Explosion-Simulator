@@ -1,0 +1,8 @@
+// Renderer.
+renderer = new THREE.WebGLRenderer({
+	antialias : true
+});
+renderer.setSize(800, 600);
+renderer.shadowMapEnabled = true;
+renderer.setClearColor(0x000000, 1.0);
+renderer.shadowMapSoft = true; 
