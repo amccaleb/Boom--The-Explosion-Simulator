@@ -362,9 +362,8 @@ Game.prototype.render = function(t) {
 	var that = this;
 
 	// Render all our chemicals
-	var curTime = new Date().getTime();
 	_.each(this.chemicals, function(element, index) {
-		element.render((curTime - that.startTime) * 0.001);
+		element.render(t);
 	});
 
 	// Look at the scene and render

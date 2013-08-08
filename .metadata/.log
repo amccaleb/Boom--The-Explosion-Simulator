@@ -133,3 +133,27 @@ Command-line arguments:  -os win32 -ws win32 -arch x86
 
 !ENTRY org.eclipse.osgi 2 1 2013-08-07 16:55:36.963
 !MESSAGE NLS missing message: HttpServerSettingsTab_Title in: com.aptana.js.debug.ui.internal.launchConfigurations.messages
+
+!ENTRY com.aptana.index.core 4 0 2013-08-07 17:20:23.341
+!MESSAGE (Build 3.4.1.201306062137) [ERROR]  Failed to delete index file C:\Users\Ajay\My Programs\CMPS 179\Summer 2013\Boom--The-Explosion-Simulator\.metadata\.plugins\com.aptana.index.core\2768257843.index
+!STACK 0
+java.io.IOException: Failed to delete index file C:\Users\Ajay\My Programs\CMPS 179\Summer 2013\Boom--The-Explosion-Simulator\.metadata\.plugins\com.aptana.index.core\2768257843.index
+	at com.aptana.internal.index.core.DiskIndex.mergeWith(DiskIndex.java:946)
+	at com.aptana.index.core.Index.save(Index.java:698)
+	at com.aptana.index.core.Index.save(Index.java:671)
+	at com.aptana.core.internal.build.IndexBuildParticipant.buildEnding(IndexBuildParticipant.java:66)
+	at com.aptana.core.internal.build.LazyBuildParticipant.buildEnding(LazyBuildParticipant.java:67)
+	at com.aptana.core.build.UnifiedBuilder.buildEnding(UnifiedBuilder.java:219)
+	at com.aptana.core.build.UnifiedBuilder.build(UnifiedBuilder.java:190)
+	at org.eclipse.core.internal.events.BuildManager$2.run(BuildManager.java:728)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:199)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:239)
+	at org.eclipse.core.internal.events.BuildManager$1.run(BuildManager.java:292)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:295)
+	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:351)
+	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:374)
+	at org.eclipse.core.internal.events.AutoBuildJob.doBuild(AutoBuildJob.java:143)
+	at org.eclipse.core.internal.events.AutoBuildJob.run(AutoBuildJob.java:241)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
