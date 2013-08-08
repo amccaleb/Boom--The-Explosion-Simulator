@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename resource &apos;Boom--The Explosion Simulator/engine/simulation_primitives/SDSim.js&apos; to &apos;SDModel.js&apos;" description="Rename resource &apos;SDSim.js&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="engine/simulation_primitives/SDSim.js" name="SDModel.js" stamp="1375401941878" updateReferences="true"/>
-</session>
