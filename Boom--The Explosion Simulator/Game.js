@@ -274,6 +274,26 @@ Game.prototype.initChemicals = function() {
 	bathtubic.object.position.set(0, -140, 0);
 	this.chemicals.push(bathtubic);
 	
+	// Ceilingdroptum
+	var ceilingdroptum = new CHCeilingdroptum();
+	ceilingdroptum.object.position.set(200, -140, 0);
+	this.chemicals.push(ceilingdroptum);
+	
+	// Annoyinsectamine
+	var annoyinsectamine = new CHAnnoyinsectamine();
+	annoyinsectamine.object.position.set(-200, -184, 0);
+	this.chemicals.push(annoyinsectamine);
+	
+	// Disactualliworksol
+	var disactualliworksol = new CHDisactualliworksol();
+	disactualliworksol.object.position.set(-325, -190, 0);
+	this.chemicals.push(disactualliworksol);
+	
+	// Explodium
+	var explodium = new CHExplodium();
+	explodium.object.position.set(500, -140, 0);
+	this.chemicals.push(explodium);
+	
 	// Add each chemical to our scene
 	_.each(this.chemicals, function(element, index) {
 		that.scene.add(element.object);
