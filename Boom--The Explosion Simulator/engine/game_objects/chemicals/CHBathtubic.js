@@ -22,6 +22,16 @@
  */
 var CHBathtubic = function() {
 
+	// Set the stats for this chemical
+	this.stats = {
+		sensitivity : 4,
+		stability : 8,
+		visualAppeal : 6,
+		perf : 9,
+		strength : 7,
+		velocity : 4
+	};
+	
 	// Create geometry for this chemical
 	// radiusAtTop, radiusAtBottom, height, segmentsAroundRadius, segmentsAlongHeight,
 	this.geometry = new THREE.CylinderGeometry(50, 100, 100, 20, 4);

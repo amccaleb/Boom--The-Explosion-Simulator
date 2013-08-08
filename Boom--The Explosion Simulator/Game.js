@@ -355,7 +355,7 @@ Game.prototype.update = function() {
 
 /**
  * Render game view for time t
- * Anything that isn't explicitly rendered ere, is implicitly rendered by THREE.js
+ * Anything that isn't explicitly rendered here, is implicitly rendered by THREE.js
  */
 Game.prototype.render = function(t) {
 
