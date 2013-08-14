@@ -18,6 +18,17 @@
  */
 
 var CHExplodium = function(){
+	
+	// Set the stats for this chemical
+	this.stats = {
+		sensitivity : 10,
+		stability : 1,
+		visualAppeal : 10,
+		perf : 10,
+		strength : 10,
+		velocity : 10
+	};
+	
 	var perlinText = loadFile('util/perlin.glsl');
 	var vertexShaderText = loadFile('shaders/PerlinNoise/PerlinNoise.vert');
 	var fragmentShaderText = loadFile('shaders/PerlinNoise/PerlinNoise.frag');
@@ -41,6 +52,6 @@ var CHExplodium = function(){
 	//this.object.position.set(-500, -140, 0);
 };
 
-CHExplodium.prototype.render = function(t){
+CHExplodium.prototype.update = function(t){
 	this.material.uniforms['uTime'].value = t;
 };

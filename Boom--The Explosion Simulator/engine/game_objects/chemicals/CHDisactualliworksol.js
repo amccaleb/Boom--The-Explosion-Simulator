@@ -21,6 +21,17 @@
  * Default Constructor
  */
 var CHDisactualliworksol = function(){
+	
+	// Set the stats for this chemical
+	this.stats = {
+		sensitivity : 0,
+		stability : 8,
+		visualAppeal : 1,
+		perf : 7,
+		strength : 4,
+		velocity : 4
+	};
+	
 	this.geometry = new THREE.SphereGeometry( 30, 50, 20, 0, 2 * Math.PI, 0, Math.PI / 2 );
 	var disTexture = THREE.ImageUtils.loadTexture( 'images/sugar.jpg' );
 	this.material = new THREE.MeshBasicMaterial({
@@ -33,6 +44,6 @@ var CHDisactualliworksol = function(){
 	
 };
 
-CHDisactualliworksol.prototype.render = function(t){
+CHDisactualliworksol.prototype.update = function(t){
 };
 

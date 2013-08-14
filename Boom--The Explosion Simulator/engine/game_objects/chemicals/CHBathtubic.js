@@ -84,7 +84,7 @@ var CHBathtubic = function() {
 /**
  * Interacts with shaders and provides a general update to bathtubic chemicals to be rendered
  */
-CHBathtubic.prototype.render = function(t)
+CHBathtubic.prototype.update = function(t)
 {
 	// Pass our uniform variables to the shaders
 	this.material.uniforms['uTime'].value = t;

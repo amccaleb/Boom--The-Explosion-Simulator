@@ -18,6 +18,17 @@
  */
 
 var CHAnnoyinsectamine = function() {
+	
+	// Set the stats for this chemical
+	this.stats = {
+		sensitivity : 0,
+		stability : 10,
+		visualAppeal : 6,
+		perf : 1,
+		strength : 5,
+		velocity : 5
+	};
+	
 	this.geometry = new THREE.SphereGeometry( 40, 35, 10, 0, 2 * Math.PI, 0, Math.PI / 2 );
 	var insectTexture = THREE.ImageUtils.loadTexture( 'images/maggot.png' );
 	var insectUniforms = 
@@ -39,5 +50,5 @@ var CHAnnoyinsectamine = function() {
 	//particleDome.position.set(-200, -184, 0);
 };
 
-CHAnnoyinsectamine.prototype.render = function(t){
+CHAnnoyinsectamine.prototype.update = function(t){
 };

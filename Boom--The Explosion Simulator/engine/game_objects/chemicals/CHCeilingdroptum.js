@@ -18,6 +18,17 @@
  */
 
 var CHCeilingdroptum = function() {
+	
+	// Set the stats for this chemical
+	this.stats = {
+		sensitivity : 8,
+		stability : 6,
+		visualAppeal : 3,
+		perf : 5,
+		strength : 10,
+		velocity : 2
+	};
+	
 	this.geometry = new THREE.TetrahedronGeometry(75, 1);
 	
 	var bVertexShaderText = loadFile('shaders/BumpMap/BumpMap.vert');
@@ -35,6 +46,6 @@ var CHCeilingdroptum = function() {
 	this.object = new THREE.Mesh(this.geometry, this.material);
 }
 
-CHCeilingdroptum.prototype.render = function(t){
+CHCeilingdroptum.prototype.update = function(t){
 	
 };
