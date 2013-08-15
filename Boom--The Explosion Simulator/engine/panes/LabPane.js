@@ -36,6 +36,9 @@ var LabPane = function() {
 
 	this.initSim();
 
+	// Initialize explosion triggering
+	this.toExplode = false;
+
 	// Initialize the camera
 	this.camera = new THREE.PerspectiveCamera(75, 4.0 / 3.0, 1, 10000);
 	this.camera.position.z = -500;
@@ -283,6 +286,9 @@ LabPane.prototype.initGUI = function() {
 	// Setup GUI
 	this.gui = new dat.GUI();
 
+	// Add in the folder for viewing explosion properties
+	this.guiProperties = this.gui.addFolder('Explosion Properties');
+
 	this.guiParameters = {
 		sensitivity : that.sim.levels[sdlSensitivity].value,
 		stability : that.sim.levels[sdlStability].value,
@@ -292,35 +298,46 @@ LabPane.prototype.initGUI = function() {
 		velocity : that.sim.levels[sdlVelocity].value
 	};
 
-	var lSensitivity = this.gui.add(this.guiParameters, 'sensitivity').min(0).max(10).step(0.01).name('Sensitivity').listen();
+	var lSensitivity = this.guiProperties.add(this.guiParameters, 'sensitivity').min(0).max(10).step(0.01).name('Sensitivity').listen();
 	lSensitivity.onChange(function(value) {
 		that.sim.levels[sdlSensitivity].value = value;
 	});
 
-	var lStability = this.gui.add(this.guiParameters, 'stability').min(0).max(10).step(0.01).name('Stability').listen();
+	var lStability = this.guiProperties.add(this.guiParameters, 'stability').min(0).max(10).step(0.01).name('Stability').listen();
 	lStability.onChange(function(value) {
 		that.sim.levels[sdlStability].value = value;
 	});
 
-	var lVisualAppeal = this.gui.add(this.guiParameters, 'visualAppeal').min(0).max(10).step(0.01).name('Visual Appeal').listen();
+	var lVisualAppeal = this.guiProperties.add(this.guiParameters, 'visualAppeal').min(0).max(10).step(0.01).name('Visual Appeal').listen();
 	lVisualAppeal.onChange(function(value) {
 		that.sim.levels[sdlVisualAppeal].value = value;
 	});
 
-	var lPerf = this.gui.add(this.guiParameters, 'perf').min(0).max(10).step(0.01).name('Performance').listen();
+	var lPerf = this.guiProperties.add(this.guiParameters, 'perf').min(0).max(10).step(0.01).name('Performance').listen();
 	lPerf.onChange(function(value) {
 		that.sim.levels[sdlPerf].value = value;
 	});
 
-	var lStrength = this.gui.add(this.guiParameters, 'strength').min(0).max(10).step(0.01).name('Strength').listen();
+	var lStrength = this.guiProperties.add(this.guiParameters, 'strength').min(0).max(10).step(0.01).name('Strength').listen();
 	lStrength.onChange(function(value) {
 		that.sim.levels[sdlStrength].value = value;
 	});
 
-	var lVelocity = this.gui.add(this.guiParameters, 'velocity').min(0).max(10).step(0.01).name('Velocity').listen();
+	var lVelocity = this.guiProperties.add(this.guiParameters, 'velocity').min(0).max(10).step(0.01).name('Velocity').listen();
 	lVelocity.onChange(function(value) {
 		that.sim.levels[sdlVelocity].value = value;
 	});
+
+	this.guiProperties.open();
+	
+	// Buttons
+	this.guiButtons = {
+		explode : function(){
+			that.toExplode = true;
+		}
+	};
+	
+	this.gui.add(this.guiButtons, 'explode').name("EXPLODE!");
 
 	this.gui.open();
 };
@@ -375,6 +392,13 @@ LabPane.prototype.handleInput = function(keyboard, game) {
 	/*if (keyboard.pressed('enter', true)) {
 	 game.pushPane(new CubePane());
 	 }*/
+	
+	// See if any transition flags have been set
+	if(this.toExplode)
+	{
+		this.toExplode = false;
+		game.pushPane(new ExplosionPane());
+	}
 };
 
 /**
