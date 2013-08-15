@@ -55,6 +55,9 @@ var LabPane = function() {
 
 	// Create all our chemicals
 	this.initChemicals();
+	
+	// Create Equipment
+	this.initEquipment();
 
 	// Create the Skybox
 	this.skybox = new Skybox();
@@ -271,6 +274,57 @@ LabPane.prototype.initChemicals = function() {
 	_.each(this.chemicals, function(element, index) {
 		that.scene.add(element.object);
 	});
+};
+
+
+
+LabPane.prototype.initEquipment = function() {
+	var that = this;
+	// Create the list of chemicals and begin pushing each chemical
+	this.equipment = [];
+
+	// Beaker
+	var beaker = new EQBeaker();
+	beaker.objectBottom.position.set(0,-170,200);
+	beaker.object.position.set(0,-110,200);
+	this.equipment.push(beaker);
+	
+	// Bunsen Burner
+	var bunsenBurner = new EQBunsenBurner();
+	bunsenBurner.objectBottom.position.set(-175,-175,200);
+	bunsenBurner.object.position.set(-175,-90,200);
+	this.equipment.push(bunsenBurner);
+	
+	// Graduated Cylinder
+	var graduatedCylinder = new EQGraduatedCylinder();
+	graduatedCylinder.objectBottom.position.set(-450,-185,200);
+	graduatedCylinder.object.position.set(-450,-60,200);
+	this.equipment.push(graduatedCylinder);
+	
+	// Bowl
+	var bowl = new EQBowl();
+	bowl.objectBottom.position.set(150,-180,200);
+	bowl.object.position.set(150,-170,200);
+	this.equipment.push(bowl);
+	
+	// Florence Flask
+	var florenceFlask = new EQFlorenceFlask();
+	florenceFlask.object.position.set(-300,-130,200);
+	this.equipment.push(florenceFlask);
+	
+	// Erlenmeyer Flask
+	var erlenFlask = new EQErlenFlask();
+	erlenFlask.object.position.set(-500,-140,0);
+	this.equipment.push(erlenFlask);
+
+	// Add each equipment to our scene
+	_.each(this.equipment, function(element, index) {
+		that.scene.add(element.object);
+		if(element.objectBottom){
+			that.scene.add(element.objectBottom);
+		}
+	});
+	
 };
 
 /**
