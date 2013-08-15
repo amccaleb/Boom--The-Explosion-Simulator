@@ -41,7 +41,7 @@ var ExplosionPane = function(stats) {
 	this.scene.add(this.camera);
 
 	// Create the explosion object
-	this.explosion = new Explosion();
+	this.explosion = new Explosion(stats);
 
 	this.scene.add(this.explosion.object);
 
@@ -77,6 +77,6 @@ ExplosionPane.prototype.handleInput = function(keyboard, game) {
  * HUD Elements for the score
  */
 ExplosionPane.prototype.overlay = function(ctx) {
-	ctx.fillStyle = '#ff0000';
-	ctx.fillRect(100, 100, 200, 200);
+	//ctx.fillStyle = '#ff0000';
+	//ctx.fillRect(100, 100, 200, 200);
 };

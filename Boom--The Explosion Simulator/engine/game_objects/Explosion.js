@@ -15,8 +15,10 @@
 /**
  * Default Constructor
  */
-var Explosion = function() {
+var Explosion = function(stats) {
+	var that = this;
 	this.startTime = new Date().getTime();
+	this.stats = stats;
 	this.geometry = new THREE.IcosahedronGeometry(20, 5);
 	this.material = new THREE.ShaderMaterial({
 
@@ -32,6 +34,30 @@ var Explosion = function() {
 			weight : {
 				type : "f",
 				value : 10.0
+			},
+			sensitivity : {
+				type : "f",
+				value : that.stats.sensitivity
+			},
+			stability : {
+				type : "f",
+				value : that.stats.stability
+			},
+			visualAppeal : {
+				type : "f",
+				value : that.stats.visualAppeal
+			},
+			performance : {
+				type : "f",
+				value : that.stats.perf
+			},
+			strength : {
+				type : "f",
+				value : that.stats.strength
+			},
+			velocity : {
+				type : "f",
+				value : that.stats.velocity
 			}
 		},
 		vertexShader : loadFile('shaders/Explosion/Explosion.vert'),

@@ -182,6 +182,12 @@
 			varying float ao;
 			uniform float time;
 			uniform float weight;
+			uniform float sensitivity;
+			uniform float stability;
+			uniform float visualAppeal;
+			uniform float performance;
+			uniform float strength;
+			uniform float velocity;
 			varying float d;
 
 			float stripes( float x, float f) {
@@ -206,14 +212,14 @@
 
 			pos = position;
 			//float noise = .3 * pnoise( 8.0 * vec3( normal ) );
-			float noise = 10.0 *  -.10 * turbulence( .5 * normal + time );
+			float noise = stability * 10.0 *  -.10 * turbulence( .5 * normal + time );
 			//float noise = - stripes( normal.x + 2.0 * turbulence( normal ), 1.6 );
 
 			float displacement = - weight * noise;
-			displacement += 5.0 * pnoise( 0.05 * position + vec3( 2.0 * time ), vec3( 100.0 ) );
+			displacement += velocity * sensitivity * pnoise( 0.05 * position + vec3( 2.0 * time ), vec3( 100.0 ) );
 
 			ao = noise;
-			vec3 newPosition = position + normal * vec3( displacement );
+			vec3 newPosition = position + normal * vec3( strength * displacement );
 			gl_Position = projectionMatrix * modelViewMatrix * vec4( newPosition, 1.0 );
 
 			}

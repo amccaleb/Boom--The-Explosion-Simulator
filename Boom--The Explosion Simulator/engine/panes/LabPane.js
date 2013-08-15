@@ -58,7 +58,7 @@ var LabPane = function() {
 
 	// Create all our chemicals
 	this.initChemicals();
-	
+
 	// Create Equipment
 	this.initEquipment();
 
@@ -279,8 +279,6 @@ LabPane.prototype.initChemicals = function() {
 	});
 };
 
-
-
 LabPane.prototype.initEquipment = function() {
 	var that = this;
 	// Create the list of chemicals and begin pushing each chemical
@@ -288,46 +286,46 @@ LabPane.prototype.initEquipment = function() {
 
 	// Beaker
 	var beaker = new EQBeaker();
-	beaker.objectBottom.position.set(0,-170,200);
-	beaker.object.position.set(0,-110,200);
+	beaker.objectBottom.position.set(0, -170, 200);
+	beaker.object.position.set(0, -110, 200);
 	this.equipment.push(beaker);
-	
+
 	// Bunsen Burner
 	var bunsenBurner = new EQBunsenBurner();
-	bunsenBurner.objectBottom.position.set(-175,-175,200);
-	bunsenBurner.object.position.set(-175,-90,200);
+	bunsenBurner.objectBottom.position.set(-175, -175, 200);
+	bunsenBurner.object.position.set(-175, -90, 200);
 	this.equipment.push(bunsenBurner);
-	
+
 	// Graduated Cylinder
 	var graduatedCylinder = new EQGraduatedCylinder();
-	graduatedCylinder.objectBottom.position.set(-450,-185,200);
-	graduatedCylinder.object.position.set(-450,-60,200);
+	graduatedCylinder.objectBottom.position.set(-450, -185, 200);
+	graduatedCylinder.object.position.set(-450, -60, 200);
 	this.equipment.push(graduatedCylinder);
-	
+
 	// Bowl
 	var bowl = new EQBowl();
-	bowl.objectBottom.position.set(150,-180,200);
-	bowl.object.position.set(150,-170,200);
+	bowl.objectBottom.position.set(150, -180, 200);
+	bowl.object.position.set(150, -170, 200);
 	this.equipment.push(bowl);
-	
+
 	// Florence Flask
 	var florenceFlask = new EQFlorenceFlask();
-	florenceFlask.object.position.set(-300,-130,200);
+	florenceFlask.object.position.set(-300, -130, 200);
 	this.equipment.push(florenceFlask);
-	
+
 	// Erlenmeyer Flask
 	var erlenFlask = new EQErlenFlask();
-	erlenFlask.object.position.set(-500,-140,0);
+	erlenFlask.object.position.set(-500, -140, 0);
 	this.equipment.push(erlenFlask);
 
 	// Add each equipment to our scene
 	_.each(this.equipment, function(element, index) {
 		that.scene.add(element.object);
-		if(element.objectBottom){
+		if (element.objectBottom) {
 			that.scene.add(element.objectBottom);
 		}
 	});
-	
+
 };
 
 /**
@@ -383,14 +381,14 @@ LabPane.prototype.initGUI = function() {
 	});
 
 	this.guiProperties.open();
-	
+
 	// Buttons
 	this.guiButtons = {
-		explode : function(){
+		explode : function() {
 			that.toExplode = true;
 		}
 	};
-	
+
 	this.gui.add(this.guiButtons, 'explode').name("EXPLODE!");
 
 	this.gui.open();
@@ -444,14 +442,34 @@ LabPane.prototype.handleInput = function(keyboard, game) {
 
 	// Now perge the keyboard
 	/*if (keyboard.pressed('enter', true)) {
-	 game.pushPane(new CubePane());
-	 }*/
-	
+	game.pushPane(new CubePane());
+	}*/
+
 	// See if any transition flags have been set
-	if(this.toExplode)
-	{
+	if (this.toExplode) {
 		this.toExplode = false;
-		game.pushPane(new ExplosionPane());
+		
+		// We add a small delta to each value so that our explosion doesn't have any undesired zeros
+		var delta = 1;
+		var explosionStats = {
+			sensitivity : this.sim.levels[sdlSensitivity].value + delta,
+			stability : this.sim.levels[sdlStability].value + delta,
+			visualAppeal : this.sim.levels[sdlVisualAppeal].value + delta,
+			perf : this.sim.levels[sdlPerf].value + delta,
+			strength : this.sim.levels[sdlStrength].value + delta,
+			velocity : this.sim.levels[sdlVelocity].value + delta
+		};
+		
+		// For testing explosion shader
+		/*var explosionStats = {
+			sensitivity : delta,
+			stability : delta,
+			visualAppeal : 10 + delta,
+			perf : delta,
+			strength : delta,
+			velocity : delta
+		};*/
+		game.pushPane(new ExplosionPane(explosionStats));
 	}
 };
 
@@ -460,6 +478,6 @@ LabPane.prototype.handleInput = function(keyboard, game) {
  * HUD Elements for each chemical
  */
 LabPane.prototype.overlay = function(ctx) {
-	ctx.fillStyle = '#ff0000';
-	ctx.fillRect(100, 100, 200, 200);
+	//ctx.fillStyle = '#ff0000';
+	//ctx.fillRect(100, 100, 200, 200);
 };
