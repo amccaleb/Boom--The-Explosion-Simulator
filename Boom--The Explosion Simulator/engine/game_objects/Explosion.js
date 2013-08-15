@@ -66,9 +66,12 @@ var Explosion = function(stats) {
 	});
 
 	this.object = new THREE.Mesh(this.geometry, this.material);
+
+	// Derive the score for this explosion. TODO: Have this be based around photography concepts, not just arbitrary weights
+	this.score = Math.ceil(1000 * (this.stats.sensitivity * 2.0 + (10 - this.stats.stability) * 1.3 + this.stats.visualAppeal * 2.5 + this.stats.perf * 1.7 + this.stats.strength * 1.1 + this.stats.velocity));
 };
 
 Explosion.prototype.update = function(t) {
 	var time = new Date().getTime();
 	this.material.uniforms['time'].value = .00025 * (time - this.startTime);
-}; 
+};

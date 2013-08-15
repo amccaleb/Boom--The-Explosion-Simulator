@@ -77,6 +77,11 @@ ExplosionPane.prototype.handleInput = function(keyboard, game) {
  * HUD Elements for the score
  */
 ExplosionPane.prototype.overlay = function(ctx) {
-	//ctx.fillStyle = '#ff0000';
-	//ctx.fillRect(100, 100, 200, 200);
+	ctx.fillStyle = '#ff0000';
+	ctx.fillRect(0, 500, 800, 100);
+
+	ctx.font = '30pt Calibri';
+	ctx.textAlign = 'center';
+	ctx.fillStyle = 'blue';
+	ctx.fillText('Score: ' + this.explosion.score, 400, 550);
 };
