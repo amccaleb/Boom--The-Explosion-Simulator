@@ -20,6 +20,7 @@
 var Game = function() {
 
 	// Initialize game state
+	var that = this;
 
 	// Create the clock the game will run on
 	this.clock = new THREE.Clock();
@@ -38,6 +39,12 @@ var Game = function() {
 	this.renderer.shadowMapSoft = true;
 	document.body.appendChild(this.renderer.domElement);
 
+	// Start with blank stack of panes
+	this.panes = [];
+
+	// Setup input handlers
+	this.keyboard = new Keyboard();
+
 	// Visible canvas area on top of 3D rendering area
 	this.canvas = document.createElement('canvas');
 	this.canvas.style.position = 'absolute';
@@ -48,11 +55,17 @@ var Game = function() {
 	this.container.appendChild(this.canvas);
 	this.ctx = this.canvas.getContext('2d');
 
-	// Start with blank stack of panes
-	this.panes = [];
-
-	// Setup input handlers
-	this.keyboard = new Keyboard();
+	// Add event listeners to our canvas
+	this.canvas.addEventListener('mousemove', function(evt) {
+		curMousePos = getMousePos(that.canvas, evt);
+	}, false);
+	this.canvas.addEventListener('click', function(evt) {
+		// If there is no active pane do nothing
+		if (that.panes.length > 0) {
+			var pane = that.panes[that.panes.length - 1];
+			pane.handleCanvasInput(that);
+		}
+	}, false);
 };
 
 /**
@@ -75,7 +88,7 @@ Game.prototype.init = function() {
  * Any existing panes are push down on stack
  */
 Game.prototype.pushPane = function(pane) {
-  this.panes.push(pane);
+	this.panes.push(pane);
 };
 
 /**
@@ -83,37 +96,37 @@ Game.prototype.pushPane = function(pane) {
  * Reveals lower panes on stack
  */
 Game.prototype.popPane = function() {
-  this.panes.pop();
+	this.panes.pop();
 };
 
 /**
  * Update the game state
  */
 Game.prototype.update = function() {
-	
+
 };
 
 /**
  * Render game view for time t
  */
 Game.prototype.render = function(t) {
-  // If there is no active pane do nothing
-  if(this.panes.length > 0) {
-    var pane = this.panes[this.panes.length - 1];
-    // Handle player input
-    pane.handleInput(this.keyboard, this);
-    // Update pane
-    // Pass renderer so it can do cubemaps for reflections
-    pane.update(t, this.renderer);
-    // Pass canvas so it can decide on its own overlay
-    // Render the pane
-    this.renderer.render(pane.scene, pane.camera);
-    // Clear pane overlay
-    // Touching width of a canvas always clears it
-    this.canvas.width = this.canvas.width;
-    // Render pane overlay
-    pane.overlay(this.ctx);
-  }
+	// If there is no active pane do nothing
+	if (this.panes.length > 0) {
+		var pane = this.panes[this.panes.length - 1];
+		// Handle player input
+		pane.handleInput(this.keyboard, this);
+		// Update pane
+		// Pass renderer so it can do cubemaps for reflections
+		pane.update(t, this.renderer);
+		// Pass canvas so it can decide on its own overlay
+		// Render the pane
+		this.renderer.render(pane.scene, pane.camera);
+		// Clear pane overlay
+		// Touching width of a canvas always clears it
+		this.canvas.width = this.canvas.width;
+		// Render pane overlay
+		pane.overlay(this.ctx);
+	}
 };
 
 /**

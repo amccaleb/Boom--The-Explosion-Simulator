@@ -56,6 +56,20 @@ var LabPane = function() {
 	this.table.object.translateZ(-190);
 	this.scene.add(this.table.object);
 
+	// Initialize the mixture properties
+	this.mixture = [];
+	this.nextMixturePos = {
+		x : 0,
+		y : -160,
+		z : 200
+	};
+	// The initial mixture
+	var initMixture = new CHInit();
+	initMixture.object.position.set(this.nextMixturePos.x, this.nextMixturePos.y, this.nextMixturePos.z);
+	this.nextMixturePos.y += 50;
+	this.mixture.push(initMixture);
+	this.scene.add(initMixture.object);
+
 	// Create all our chemicals
 	this.initChemicals();
 
@@ -304,8 +318,8 @@ LabPane.prototype.initEquipment = function() {
 
 	// Bowl
 	var bowl = new EQBowl();
-	bowl.objectBottom.position.set(150, -180, 200);
-	bowl.object.position.set(150, -170, 200);
+	bowl.objectBottom.position.set(250, -180, 200);
+	bowl.object.position.set(250, -170, 200);
 	this.equipment.push(bowl);
 
 	// Florence Flask
@@ -427,6 +441,11 @@ LabPane.prototype.update = function(t, renderer) {
 		element.update((curTime - that.startTime) * 0.001);
 	});
 
+	// Update our mixture
+	_.each(this.mixture, function(element, index) {
+		element.update((curTime - that.startTime) * 0.001);
+	});
+
 	// Look at the scene
 	this.camera.lookAt(this.scene.position);
 };
@@ -437,18 +456,10 @@ LabPane.prototype.update = function(t, renderer) {
  */
 LabPane.prototype.handleInput = function(keyboard, game) {
 
-	// First update the orbit controls
-	//this.orbitControls.update();
-
-	// Now perge the keyboard
-	/*if (keyboard.pressed('enter', true)) {
-	game.pushPane(new CubePane());
-	}*/
-
 	// See if any transition flags have been set
 	if (this.toExplode) {
 		this.toExplode = false;
-		
+
 		// We add a small delta to each value so that our explosion doesn't have any undesired zeros
 		var delta = 1;
 		var explosionStats = {
@@ -459,17 +470,72 @@ LabPane.prototype.handleInput = function(keyboard, game) {
 			strength : this.sim.levels[sdlStrength].value + delta,
 			velocity : this.sim.levels[sdlVelocity].value + delta
 		};
-		
+
 		// For testing explosion shader
 		/*var explosionStats = {
-			sensitivity : delta,
-			stability : delta,
-			visualAppeal : 10 + delta,
-			perf : delta,
-			strength : delta,
-			velocity : delta
-		};*/
-		game.pushPane(new ExplosionPane(explosionStats));
+		 sensitivity : delta,
+		 stability : delta,
+		 visualAppeal : 10 + delta,
+		 perf : delta,
+		 strength : delta,
+		 velocity : delta
+		 };*/
+
+		this.gui.destroy();
+
+		game.pushPane(new ExplosionPane(explosionStats, game));
+	}
+};
+
+/**
+ * Handles input to the 2D canvas inside LabPane
+ */
+LabPane.prototype.handleCanvasInput = function(game) {
+
+	// See if our click hit a canvas element
+	if (curMousePos.y >= 500) {// We're clicking in the HUD area
+		// Create the new chemical we're probably clicking on
+		var newChem = null;
+		if (curMousePos.x >= 20 && curMousePos.x <= 140) {
+			//We're clicking Explodium
+
+			// Add more explodium to our mixture
+			newChem = new CHExplodium(true);
+		} else if (curMousePos.x >= 180 && curMousePos.x <= 300) {
+			//We're clicking Ceilingdroptum
+
+			// Add more ceilingdroptum to our mixture
+			newChem = new CHCeilingdroptum(true);
+		} else if (curMousePos.x >= 340 && curMousePos.x <= 460) {
+			//We're clicking Bathtubic
+
+			// Add more bathtubic to our mixture
+			newChem = new CHBathtubic(true);
+		} else if (curMousePos.x >= 500 && curMousePos.x <= 620) {
+			//We're clicking Annoyinsectamine
+
+			// Add more annoyinsectamine to our mixture
+			newChem = new CHAnnoyinsectamine(true);
+		} else if (curMousePos.x >= 660 && curMousePos.x <= 780) {
+			//We're clicking Disactualliworksol
+
+			// Add more disactualliworksol to our mixture
+			newChem = new CHDisactualliworksol(true);
+		}
+		if (newChem != null) {
+			newChem.object.position.set(this.nextMixturePos.x, this.nextMixturePos.y, this.nextMixturePos.z);
+			this.nextMixturePos.y += 50;
+			this.mixture.push(newChem);
+			this.scene.add(newChem.object);
+
+			// Now add this to the simulation
+			this.sim.levels[sdlSensitivity].value += ((Math.random() * 2) - 1) * newChem.stats['sensitivity'] / this.mixture.length;
+			this.sim.levels[sdlStability].value += ((Math.random() * 2) - 1) * newChem.stats['stability'] / this.mixture.length;
+			this.sim.levels[sdlVisualAppeal].value += ((Math.random() * 2) - 1) * newChem.stats['visualAppeal'] / this.mixture.length;
+			this.sim.levels[sdlPerf].value += ((Math.random() * 2) - 1) * newChem.stats['perf'] / this.mixture.length;
+			this.sim.levels[sdlStrength].value += ((Math.random() * 2) - 1) * newChem.stats['strength'] / this.mixture.length;
+			this.sim.levels[sdlVelocity].value += ((Math.random() * 2) - 1) * newChem.stats['velocity'] / this.mixture.length;
+		}
 	}
 };
 
@@ -478,6 +544,45 @@ LabPane.prototype.handleInput = function(keyboard, game) {
  * HUD Elements for each chemical
  */
 LabPane.prototype.overlay = function(ctx) {
-	//ctx.fillStyle = '#ff0000';
-	//ctx.fillRect(100, 100, 200, 200);
+
+	// Explodium
+	ctx.fillStyle = '#ff0000';
+	ctx.fillRect(20, 500, 120, 100);
+	ctx.font = '12pt Calibri';
+	ctx.textAlign = 'center';
+	ctx.fillStyle = 'blue';
+	ctx.fillText('Explodium', 80, 550);
+
+	// Ceilingdroptum
+	ctx.fillStyle = '#ff0000';
+	ctx.fillRect(180, 500, 120, 100);
+	ctx.font = '12pt Calibri';
+	ctx.textAlign = 'center';
+	ctx.fillStyle = 'blue';
+	ctx.fillText('Ceilingdroptum', 240, 550);
+
+	// Bathtubic
+	ctx.fillStyle = '#ff0000';
+	ctx.fillRect(340, 500, 120, 100);
+	ctx.font = '12pt Calibri';
+	ctx.textAlign = 'center';
+	ctx.fillStyle = 'blue';
+	ctx.fillText('Bathtubic', 400, 550);
+
+	// Annoyinsectamine
+	ctx.fillStyle = '#ff0000';
+	ctx.fillRect(500, 500, 120, 100);
+	ctx.font = '12pt Calibri';
+	ctx.textAlign = 'center';
+	ctx.fillStyle = 'blue';
+	ctx.fillText('Annoyinsectamine', 560, 550);
+
+	// Disactualliworksol
+	ctx.fillStyle = '#ff0000';
+	ctx.fillRect(660, 500, 120, 100);
+	ctx.font = '12pt Calibri';
+	ctx.textAlign = 'center';
+	ctx.fillStyle = 'blue';
+	ctx.fillText('Disactualliworksol', 720, 550);
+
 };

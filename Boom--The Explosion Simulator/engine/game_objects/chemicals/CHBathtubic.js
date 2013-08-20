@@ -19,8 +19,9 @@
 
 /**
  * Default Constructor
+ * @param {Object} mix - true if we want to create this chemical as part of our chemical mixture
  */
-var CHBathtubic = function() {
+var CHBathtubic = function(mix) {
 
 	// Set the stats for this chemical
 	this.stats = {
@@ -31,10 +32,14 @@ var CHBathtubic = function() {
 		strength : 7,
 		velocity : 4
 	};
-	
+
 	// Create geometry for this chemical
 	// radiusAtTop, radiusAtBottom, height, segmentsAroundRadius, segmentsAlongHeight,
-	this.geometry = new THREE.CylinderGeometry(50, 100, 100, 20, 4);
+	if (mix) {
+		this.geometry = new THREE.CylinderGeometry(136, 136, 50, 20, 4);
+	} else {
+		this.geometry = new THREE.CylinderGeometry(50, 100, 100, 20, 4);
+	}
 
 	// Load textures for this chemical
 	var noiseTexture = new THREE.ImageUtils.loadTexture('images/cloud.png');
@@ -84,8 +89,7 @@ var CHBathtubic = function() {
 /**
  * Interacts with shaders and provides a general update to bathtubic chemicals to be rendered
  */
-CHBathtubic.prototype.update = function(t)
-{
+CHBathtubic.prototype.update = function(t) {
 	// Pass our uniform variables to the shaders
 	this.material.uniforms['uTime'].value = t;
 };

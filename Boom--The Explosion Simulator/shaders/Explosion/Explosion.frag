@@ -1,3 +1,14 @@
+// Alexander McCaleb & Jonah Nobleza
+// CMPS 179 - Summer 2013
+// Boom -- The Explosion Simulator
+// 
+// Explosion.frag
+// 
+// A Fragment Shader used to make a surface explode
+// 
+// Based on code provided by Nathan Whitehead at:
+// http://www.clicktorelease.com/code/perlin/explosion.html
+
 varying vec2 vUv;
 			uniform sampler2D tExplosion;
 			uniform float sensitivity;

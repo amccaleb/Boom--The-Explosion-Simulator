@@ -1,3 +1,14 @@
+// Alexander McCaleb & Jonah Nobleza
+// CMPS 179 - Summer 2013
+// Boom -- The Explosion Simulator
+// 
+// Explosion.vert
+// 
+// A Vertex Shader used to make a surface explode
+// 
+// Based on code provided by Nathan Whitehead at:
+// http://www.clicktorelease.com/code/perlin/explosion.html
+
 //
 			// GLSL textureless classic 3D noise "cnoise",
 			// with an RSL-style periodic variant "pnoise".

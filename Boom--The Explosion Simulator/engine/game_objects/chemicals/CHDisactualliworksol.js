@@ -14,14 +14,15 @@
  * Performance:		7
  * Strength:		4
  * Velocity:		4
- * 
+ *
  */
 
 /**
  * Default Constructor
+ * @param {Object} mix - true if we want to create this chemical as part of our chemical mixture
  */
-var CHDisactualliworksol = function(){
-	
+var CHDisactualliworksol = function(mix) {
+
 	// Set the stats for this chemical
 	this.stats = {
 		sensitivity : 0,
@@ -31,19 +32,22 @@ var CHDisactualliworksol = function(){
 		strength : 4,
 		velocity : 4
 	};
-	
-	this.geometry = new THREE.SphereGeometry( 30, 50, 20, 0, 2 * Math.PI, 0, Math.PI / 2 );
-	var disTexture = THREE.ImageUtils.loadTexture( 'images/sugar.jpg' );
+
+	if (mix) {
+		this.geometry = new THREE.CylinderGeometry(136, 136, 50, 20, 4);
+	} else {
+		this.geometry = new THREE.SphereGeometry(30, 50, 20, 0, 2 * Math.PI, 0, Math.PI / 2);
+	}
+	var disTexture = THREE.ImageUtils.loadTexture('images/sugar.jpg');
 	this.material = new THREE.MeshBasicMaterial({
 		map : disTexture
 	});
-	
-	
+
 	this.object = new THREE.Mesh(this.geometry, this.material);
 	//disactualliworksol.position.set(-200, -190, -150);
-	
+
 };
 
-CHDisactualliworksol.prototype.update = function(t){
+CHDisactualliworksol.prototype.update = function(t) {
 };
 
