@@ -14,10 +14,9 @@ var EQErlenFlask = function(){
 	
 	this.material = new THREE.MeshBasicMaterial( { color: 0xeeeeee, transparent: true, opacity: 0.50 } );
 	
-	//this.geomBot = new THREE.CylinderGeometry( 50, 120, 150, 20, 4 );
-	//this.geomTop = new THREE.CylinderGeometry( 50, 50, 200, 20, 4 );
 	this.geomBot = new THREE.CylinderGeometry( 30, 100, 150, 20, 4 );
-	this.geomTop = new THREE.CylinderGeometry( 30, 30, 200, 20, 4 );
+	this.geomTop = new THREE.CylinderGeometry( 30, 30, 100, 20, 4 );
+	this.geomTop.applyMatrix(new THREE.Matrix4().makeTranslation(0.0, 100.0, 0.0));
 	this.objectBot = new THREE.Mesh(this.geomBot);
 	this.objectTop = new THREE.Mesh(this.geomTop);
 
@@ -26,7 +25,6 @@ var EQErlenFlask = function(){
 	this.bspIntersection = this.bspTop.union(this.bspBot);   
 	this.object = this.bspIntersection.toMesh( this.material );
 	
-	//erlenNewMesh.position.set(0, -120, 0);
 
 };
 

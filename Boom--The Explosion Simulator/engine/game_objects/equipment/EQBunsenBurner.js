@@ -24,8 +24,6 @@ var EQBunsenBurner = function(){
 	this.geometry = new THREE.CylinderGeometry(10, 10, 150, 20, 4);
 	this.object = new THREE.Mesh(this.geometry, this.metalMaterial);
 
-	//bunsenBaseMesh.position.set(-300, -175, 200);
-	//bunsenPipeMesh.position.set(-300, -90, 200);
 }
 
 EQBunsenBurner.prototype.update = function(t){

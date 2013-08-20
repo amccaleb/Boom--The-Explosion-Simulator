@@ -31,9 +31,6 @@ var EQGraduatedCylinder = function(){
 	this.bspOuter = new ThreeBSP(this.objectOuter);
 	this.bspIntersection = this.bspOuter.subtract(this.bspInner);   
 	this.object = this.bspIntersection.toMesh( this.material );
-	
-	//gcStandMesh.position.set(375, -185, 0);
-	//graduatedCylinder.position.set(375, -60, 0);
 
 };
 
